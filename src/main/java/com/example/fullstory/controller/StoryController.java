@@ -39,11 +39,11 @@ public class StoryController {
 		Elements stories = null;
 		Elements storiesCheck = null;
 		while (true) {
-			Document doc_cate = Jsoup.connect("https://truyenfull.vn/the-loai/light-novel/" + "trang-" + page).get();
+			Document doc_cate = Jsoup.connect("https://truyenfull.vn/the-loai/quan-truong/" + "trang-" + page).get();
 			stories = doc_cate.select("div.col-xs-7 > div > h3 > a");
 			Elements authors = doc_cate.select("div.col-xs-7 > div > span.author");
 
-			Document doc_cate_2 = Jsoup.connect("https://truyenfull.vn/the-loai/light-novel/" + "trang-" + (page + 1))
+			Document doc_cate_2 = Jsoup.connect("https://truyenfull.vn/the-loai/quan-truong/" + "trang-" + (page + 1))
 					.get();
 			storiesCheck = doc_cate_2.select("div.col-xs-7 > div > h3 > a");
 			for (int i = 0; i < stories.size(); i++) {
@@ -76,13 +76,10 @@ public class StoryController {
 				}
 
 				Story storyModel = new Story();
+				storyModel.setTitle(stories.get(i).text());
 
 				if (authors.get(i).hasText()) {
 					storyModel.setAuthor(authors.get(i).text());
-				}
-
-				if (authors.get(i).hasText()) {
-					storyModel.setTitle(stories.get(i).text());
 				}
 
 				if (!contents.isEmpty()) {
@@ -107,7 +104,7 @@ public class StoryController {
 				}
 				storyModel.setLink(stories.get(i).attr("href"));
 
-				// Check category duplicated
+				// Check story duplicated
 				boolean checkDuplicated = false;
 				String nameStory = stories.get(i).text();
 				checkDuplicated = storyRepository.findAll().stream().anyMatch((s) -> s.getTitle().equals(nameStory));

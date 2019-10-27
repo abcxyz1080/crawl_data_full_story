@@ -51,7 +51,7 @@ public class ChapterController {
 				chapterModel.setLink(chapter.attr("href"));
 				chapterModel.setStory(story);
 
-				// Check category duplicated
+				// Check chapter duplicated
 				boolean checkDuplicated = false;
 				checkDuplicated = chapterRepository.findAll().stream()
 						.anyMatch((s) -> s.getLink().equals(chapter.attr("href")));

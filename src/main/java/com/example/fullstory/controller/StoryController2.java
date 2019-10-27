@@ -79,13 +79,10 @@ public class StoryController2 {
 					}
 
 					Story storyModel = new Story();
+					storyModel.setTitle(stories.get(i).text());
 
 					if (authors.get(i).hasText()) {
 						storyModel.setAuthor(authors.get(i).text());
-					}
-
-					if (authors.get(i).hasText()) {
-						storyModel.setTitle(stories.get(i).text());
 					}
 
 					if (!contents.isEmpty()) {
@@ -110,7 +107,7 @@ public class StoryController2 {
 					}
 					storyModel.setLink(stories.get(i).attr("href"));
 
-					// Check category duplicated
+					// Check story duplicated
 					boolean checkDuplicated = false;
 					String nameStory = stories.get(i).text();
 					checkDuplicated = storyRepository.findAll().stream()
