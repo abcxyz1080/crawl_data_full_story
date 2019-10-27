@@ -29,7 +29,7 @@ public class StoryController2 {
 	CategoryRepository categoryRepository;
 
 	@GetMapping("/story")
-	public List<Story> getAllNotes() {
+	public List<Story> getAllStories() {
 		return storyRepository.findAll();
 	}
 
