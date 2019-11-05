@@ -5,16 +5,12 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -28,11 +24,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "story")
+@Table(name = "commic")
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = { "createdAt", "updatedAt" }, allowGetters = true)
 
-public class Story {
+public class Commic {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -41,16 +37,38 @@ public class Story {
 	private String title;
 
 	@Column(length = 65535, columnDefinition = "text")
-	private String content;
+	private String description;
 
 	@Column
 	private String author;
+
+	@Column(length = 65535, columnDefinition = "text")
+	private String thumbnail;
 
 	@Column
 	private String status;
 
 	@Column
 	private String link;
+
+	@Column
+	private String numberOfChapter;
+
+	public String getThumbnail() {
+		return thumbnail;
+	}
+
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
+	}
+
+	public String getNumberOfChapter() {
+		return numberOfChapter;
+	}
+
+	public void setNumberOfChapter(String numberOfChapter) {
+		this.numberOfChapter = numberOfChapter;
+	}
 
 	public String getStatus() {
 		return status;
@@ -87,12 +105,10 @@ public class Story {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedAt = new Date();
 
-//	@ManyToMany(mappedBy = "stories")
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinTable(name = "category_story", joinColumns = @JoinColumn(name = "story_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
+	@ManyToMany(mappedBy = "commics")
 	private List<Category> categories = new ArrayList<>();
 
-	@OneToMany(mappedBy = "story")
+	@OneToMany(mappedBy = "commic")
 	private List<Chapter> chapters = new ArrayList<>();
 
 	public Long getId() {
@@ -111,12 +127,12 @@ public class Story {
 		this.title = title;
 	}
 
-	public String getContent() {
-		return content;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public Date getCreatedAt() {

@@ -10,7 +10,7 @@ import java.util.List;
 import com.example.fullstory.constants.StatusCode;
 import com.example.fullstory.model.Category;
 import com.example.fullstory.model.Chapter;
-import com.example.fullstory.model.Story;
+import com.example.fullstory.model.Commic;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -53,11 +53,11 @@ public class ResponseUtil {
 	}
 
 	// Story
-	public static ObjectNode returnStory(Story story) {
+	public static ObjectNode returnCommic(Commic story) {
 		ObjectNode node = mapper.createObjectNode();
 		node.put("id", story.getId());
 		node.put("title", story.getTitle());
-		node.put("content", story.getContent());
+		node.put("content", story.getDescription());
 		node.put("author", story.getAuthor());
 		node.put("link", story.getLink());
 		node.put("status", story.getStatus());
@@ -66,10 +66,10 @@ public class ResponseUtil {
 		return node;
 	}
 
-	public static ArrayNode returnListStory(List<Story> stories) {
+	public static ArrayNode returnListCommic(List<Commic> stories) {
 		ArrayNode node = mapper.createArrayNode();
-		for (Story story : stories) {
-			node.add((returnStory(story)));
+		for (Commic story : stories) {
+			node.add((returnCommic(story)));
 		}
 		return node;
 	}

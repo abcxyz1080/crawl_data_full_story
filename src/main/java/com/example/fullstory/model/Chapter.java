@@ -61,8 +61,8 @@ public class Chapter {
 
 	@ManyToOne(optional = false)
 	@JsonIgnore
-	@JoinColumn(name = "story_id")
-	private Story story;
+	@JoinColumn(name = "commic_id")
+	private Commic commic;
 
 	public Long getId() {
 		return id;
@@ -104,12 +104,18 @@ public class Chapter {
 		this.updatedAt = updatedAt;
 	}
 
-	public Story getStory() {
-		return story;
+	public Commic getCommic() {
+		return commic;
 	}
 
-	public void setStory(Story story) {
-		this.story = story;
+	public void setCommic(Commic commic) {
+		this.commic = commic;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+		return (obj instanceof Chapter) ? (this.title == ((Chapter) obj).getTitle()) : false;
 	}
 
 }

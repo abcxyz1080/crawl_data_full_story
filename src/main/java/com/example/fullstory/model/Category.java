@@ -6,12 +6,16 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -54,8 +58,9 @@ public class Category {
 //	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //	@JoinTable(name = "category_story", joinColumns = @JoinColumn(name = "category_id"), inverseJoinColumns = @JoinColumn(name = "story_id"))
 	@JsonIgnore
-	@ManyToMany(mappedBy = "categories")
-	private List<Story> stories = new ArrayList<>();
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name = "category_commic", joinColumns = @JoinColumn(name = "category_id"), inverseJoinColumns = @JoinColumn(name = "commic_id"))
+	private List<Commic> commics = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -97,18 +102,24 @@ public class Category {
 		this.updatedAt = updatedAt;
 	}
 
-	public List<Story> getStories() {
-		return stories;
+	public List<Commic> getCommics() {
+		return commics;
 	}
 
-	public void setStories(List<Story> stories) {
-		this.stories = stories;
+	public void setCommics(List<Commic> commics) {
+		this.commics = commics;
 	}
 
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
 		return name;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+		return (obj instanceof Category) ? (((Category) obj).getName() == this.name) : false;
 	}
 
 }
